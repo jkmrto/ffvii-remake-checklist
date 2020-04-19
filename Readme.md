@@ -15,6 +15,7 @@ emulator -avd <emulator_name>
 3. Run android applicaiton
 ```
 npx react-native run android
+npx react-native run android --deviceId emulator-5554
 ```
 
 4. Start react native
