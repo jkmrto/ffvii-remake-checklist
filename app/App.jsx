@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {ScrollView, StyleSheet, Button, View, Text} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Button,
+  View,
+  Text,
+  ActivityIndicator,
+} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
 import update from 'immutability-helper';
@@ -7,7 +14,7 @@ import {useNavigation} from '@react-navigation/native';
 
 import Quests from './Quests.jsx';
 import Bar from './components/Bar.jsx';
-import questsList from './QuestsList.jsx';
+import * as Repository from './repositories/SideQuests.js';
 
 const lightBlue = 'rgb(176,196,222)';
 const ultraLightBlue = 'rgb(240,248,255)';
@@ -17,9 +24,20 @@ class SideQuestsScreen extends Component {
     super();
     this.state = {
       title: 'Side Quests',
-      list: questsList,
+      list: [],
       percentage: 0,
+      loading: true,
     };
+  }
+
+  async componentDidMount() {
+    try {
+      let quests = await Repository.LoadQuests();
+      console.log(quests);
+      this.setState({loading: false, list: quests});
+    } catch (err) {
+      console.log('Error fetching data-----------', err);
+    }
   }
 
   onPress(item) {
@@ -36,21 +54,31 @@ class SideQuestsScreen extends Component {
       list: list,
       percentage: ((100 * count) / list.length).toFixed(0),
     });
+
+    Repository.updateOne(list[item]);
   }
 
   render() {
-    return (
-      <View style={styles.main}>
-        <Bar
-          percentage={this.state.percentage}
-          title={this.state.title}
-          navigation={this.props.navigation}
-        />
-        <ScrollView style={styles.container}>
-          <Quests onPress={this.onPress.bind(this)} quests={this.state.list} />
-        </ScrollView>
-      </View>
-    );
+    if (!this.state.loading) {
+      return (
+        <View style={styles.main}>
+          <Bar
+            percentage={this.state.percentage}
+            title={this.state.title}
+            navigation={this.props.navigation}
+          />
+          <ScrollView style={styles.container}>
+            <Quests
+              onPress={this.onPress.bind(this)}
+              quests={this.state.list}
+            />
+          </ScrollView>
+        </View>
+      );
+    } else {
+      console.log('Hola hola hola');
+      return <ActivityIndicator />;
+    }
   }
 }
 
