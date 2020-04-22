@@ -19,7 +19,7 @@ const lightBlue = 'rgb(176,196,222)';
 const ultraLightBlue = 'rgb(240,248,255)';
 
 type MyProps = {
-  navigation: any;
+  navigation: string;
 };
 
 type MyState = {
@@ -30,7 +30,7 @@ type MyState = {
 };
 
 class SideQuestsScreen extends Component<MyProps, MyState> {
-  constructor(props) {
+  constructor(props: MyProps) {
     super(props);
     this.state = {
       title: 'Side Quests',
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function SummonsScreen({navigation}) {
+function SummonsScreen({navigation}: {navigation: string}) {
   let title = 'Summons';
   return (
     <View>

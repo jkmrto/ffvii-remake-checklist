@@ -5,7 +5,7 @@ import {ListItem} from 'react-native-elements';
 import * as domain from './domain/Domain';
 
 type Props = {
-  onPress: (number) => void;
+  onPress: (arg0: number) => void;
   quests: domain.SideQuest[];
 };
 
