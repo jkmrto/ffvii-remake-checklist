@@ -10,18 +10,28 @@ import {
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
 import update from 'immutability-helper';
-import {useNavigation} from '@react-navigation/native';
 
-import Quests from './Quests.jsx';
-import Bar from './components/Bar.jsx';
-import * as Repository from './repositories/SideQuests.js';
+import Quests from './Quests';
+import Bar from './components/Bar';
+import * as Repository from './repositories/SideQuests';
 
 const lightBlue = 'rgb(176,196,222)';
 const ultraLightBlue = 'rgb(240,248,255)';
 
-class SideQuestsScreen extends Component {
-  constructor() {
-    super();
+type MyProps = {
+  navigation: any;
+};
+
+type MyState = {
+  title: string;
+  percentage: number;
+  list: any[];
+  loading: boolean;
+};
+
+class SideQuestsScreen extends Component<MyProps, MyState> {
+  constructor(props) {
+    super(props);
     this.state = {
       title: 'Side Quests',
       list: [],
@@ -33,14 +43,13 @@ class SideQuestsScreen extends Component {
   async componentDidMount() {
     try {
       let quests = await Repository.LoadQuests();
-      console.log(quests);
       this.setState({loading: false, list: quests});
     } catch (err) {
       console.log('Error fetching data-----------', err);
     }
   }
 
-  onPress(item) {
+  onPress(item: number) {
     let newChecked = !this.state.list[item].checked;
     let list = update(this.state.list, {[item]: {checked: {$set: newChecked}}});
     let count = 0;
@@ -52,7 +61,7 @@ class SideQuestsScreen extends Component {
 
     this.setState({
       list: list,
-      percentage: ((100 * count) / list.length).toFixed(0),
+      percentage: (100 * count) / list.length,
     });
 
     Repository.updateOne(list[item]);
@@ -76,7 +85,6 @@ class SideQuestsScreen extends Component {
         </View>
       );
     } else {
-      console.log('Hola hola hola');
       return <ActivityIndicator />;
     }
   }
@@ -96,7 +104,7 @@ function SummonsScreen({navigation}) {
   let title = 'Summons';
   return (
     <View>
-      <Bar title={title} navigation={navigation} />
+      <Bar title={title} navigation={navigation} percentage={80} />
       <View>
         <Text>{title}</Text>
       </View>

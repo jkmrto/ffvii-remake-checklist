@@ -1,12 +1,21 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-import {List, ListItem} from 'react-native-elements';
+import {ListItem} from 'react-native-elements';
 
-class Quests extends Component {
+import * as domain from './domain/Domain';
+
+type Props = {
+  onPress: (number) => void;
+  quests: domain.SideQuest[];
+};
+
+type State = {};
+
+class Quests extends Component<Props, State> {
   render() {
     return (
       <View style={{backgroundColor: '#008'}}>
-        {this.props.quests.map((item, i) => (
+        {this.props.quests.map((item: domain.SideQuest, i: number) => (
           <ListItem
             style={styles.noPadding}
             key={i}
@@ -35,7 +44,6 @@ const styles = StyleSheet.create({
     color: 'rgba(100, 150, 150, 0.6)',
   },
   noPadding: {
-    paddingLeft: 0,
     paddingLeft: 0,
     paddingTop: 0,
     paddingBottom: 0,

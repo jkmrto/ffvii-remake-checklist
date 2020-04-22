@@ -7,7 +7,7 @@ const ultraLightBlue = 'rgb(240,248,255)';
 
 const Bar = ({navigation, title, percentage}) => (
   <View style={styles.container}>
-    <MenuIcon style={{paddingTop: 5}} navigation={navigation} />
+    <MenuIcon navigation={navigation} />
     <Text style={{color: ultraLightBlue, fontSize: 20}}>{title}</Text>
     <Text style={{color: ultraLightBlue, fontSize: 20}}>
       {percentage + '%'}
