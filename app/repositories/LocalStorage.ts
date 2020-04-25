@@ -28,7 +28,7 @@ type Entry = {
 };
 
 function getIndexFromKey(str: string): number | null {
-  let res: string[] = str[0].split('_');
+  let res: string[] = str.split('_');
   return parseInt(res[1]);
 }
 
@@ -56,7 +56,9 @@ export async function getByKeys(keys: string[]): Promise<Entry[]> {
 
   //Sort by Index
   entries.sort(function(a: Entry, b: Entry) {
-    return a.index, b.index;
+    if (a.index < b.index) return -1;
+    if (a.index > b.index) return 1;
+    return 0;
   });
 
   return entries;
