@@ -2,9 +2,7 @@ import * as React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/Octicons';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
-
-const lightBlue = 'rgb(176,196,222)';
-const ultraLightBlue = 'rgb(240,248,255)';
+import * as Colors from './../Colors';
 
 const Bar = ({
   navigation,
@@ -17,8 +15,8 @@ const Bar = ({
 }) => (
   <View style={styles.container}>
     <MenuIcon navigation={navigation} />
-    <Text style={{color: ultraLightBlue, fontSize: 20}}>{title}</Text>
-    <Text style={{color: ultraLightBlue, fontSize: 20}}>
+    <Text style={{color: Colors.blue.ultraLight, fontSize: 20}}>{title}</Text>
+    <Text style={{color: Colors.blue.ultraLight, fontSize: 20}}>
       {percentage + '%'}
     </Text>
   </View>
@@ -32,7 +30,7 @@ const MenuIcon = ({
   <Icon
     name="three-bars"
     size={30}
-    color={lightBlue}
+    color={'white'}
     onPress={() => navigation.openDrawer()}
   />
 );
@@ -48,8 +46,8 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     paddingTop: 10,
     paddingBottom: 10,
-    borderBottomWidth: 10,
-    borderBottomColor: lightBlue,
+    borderBottomWidth: 5,
+    borderBottomColor: 'white',
   },
 });
 export default Bar;

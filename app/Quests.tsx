@@ -14,7 +14,7 @@ type State = {};
 class Quests extends Component<Props, State> {
   render() {
     return (
-      <View style={{backgroundColor: '#008'}}>
+      <View style={{backgroundColor: '#FFF'}}>
         {this.props.quests.map((item: domain.SideQuest, i: number) => (
           <ListItem
             style={styles.noPadding}
