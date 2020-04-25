@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
 
-export function buildLabel(collection, index) {
+export function buildLabel(collection: string, index: number) {
   return collection + '_' + index;
 }
 
@@ -21,8 +21,45 @@ export async function getCollectionKeys(collection: string) {
   return filteredKeys;
 }
 
-export async function getByKeys(keys: string[]) {
-  return AsyncStorage.multiGet(keys);
+type Entry = {
+  index: number;
+  key: string;
+  value: string;
+};
+
+function getIndexFromKey(str: string): number | null {
+  let res: string[] = str[0].split('_');
+  return parseInt(res[1]);
+}
+
+export async function getByKeys(keys: string[]): Promise<Entry[]> {
+  let entries: Entry[] = [];
+  let rawFound = await AsyncStorage.multiGet(keys);
+
+  // Map to valid Entries
+  rawFound.forEach(function(item) {
+    let index = getIndexFromKey(item[0]);
+    if (index != null) {
+      if (item[1] != null) {
+        entries.push({
+          index: index,
+          key: item[0],
+          value: item[1],
+        });
+      } else {
+        console.log('Something wrong happen with: ' + item[0]);
+      }
+    } else {
+      console.log('Error parsing index from key: ' + item[0]);
+    }
+  });
+
+  //Sort by Index
+  entries.sort(function(a: Entry, b: Entry) {
+    return a.index, b.index;
+  });
+
+  return entries;
 }
 
 export function saveAll(collection: string, list: any[]) {

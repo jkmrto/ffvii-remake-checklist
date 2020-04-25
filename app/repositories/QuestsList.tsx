@@ -35,7 +35,7 @@ let ch9 = [
   "Shears' Counterattack (Madam M Route)",
 ];
 
-function mapToMissions(chapter, titleList) {
+function mapToMissions(chapter: number, titleList: string[]) {
   return titleList.map(title => {
     return {chapter: chapter, title: title, checked: false};
   });

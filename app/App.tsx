@@ -7,19 +7,23 @@ import {
   Text,
   ActivityIndicator,
 } from 'react-native';
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import {NavigationContainer} from '@react-navigation/native';
+import {
+  createDrawerNavigator,
+  DrawerNavigationProp,
+} from '@react-navigation/drawer';
 import update from 'immutability-helper';
+import {NavigationContainer} from '@react-navigation/native';
 
 import Quests from './Quests';
 import Bar from './components/Bar';
 import * as Repository from './repositories/SideQuests';
+import * as types from './types';
 
 const lightBlue = 'rgb(176,196,222)';
 const ultraLightBlue = 'rgb(240,248,255)';
 
 type MyProps = {
-  navigation: string;
+  navigation: DrawerNavigationProp<any, any>;
 };
 
 type MyState = {
@@ -100,7 +104,11 @@ const styles = StyleSheet.create({
   },
 });
 
-function SummonsScreen({navigation}: {navigation: string}) {
+function SummonsScreen({
+  navigation,
+}: {
+  navigation: DrawerNavigationProp<any, any>;
+}) {
   let title = 'Summons';
   return (
     <View>

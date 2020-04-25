@@ -7,12 +7,16 @@ const sideQuestsCollection = 'sidequests';
 export async function LoadQuests(): Promise<domain.SideQuest[]> {
   let keys = await LocalStorage.getCollectionKeys(sideQuestsCollection);
   if (keys.length === 0) {
-    console.log('Hola');
     await LocalStorage.saveAll(sideQuestsCollection, questsList);
     return questsList;
   } else {
-    let stringfyQuests = await LocalStorage.getByKeys(keys);
-    return stringfyQuests.map(item => JSON.parse(item[1]));
+    try {
+      let questsEntries = await LocalStorage.getByKeys(keys);
+      return questsEntries.map(entry => JSON.parse(entry.value));
+    } catch (e) {
+      console.error(e);
+      return [];
+    }
   }
 }
 

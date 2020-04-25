@@ -1,11 +1,22 @@
 import * as React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/Octicons';
+import {DrawerNavigationProp} from '@react-navigation/drawer';
+
+import * as types from './../types';
 
 const lightBlue = 'rgb(176,196,222)';
 const ultraLightBlue = 'rgb(240,248,255)';
 
-const Bar = ({navigation, title, percentage}) => (
+const Bar = ({
+  navigation,
+  title,
+  percentage,
+}: {
+  navigation: DrawerNavigationProp<any, any>;
+  title: string;
+  percentage: number;
+}) => (
   <View style={styles.container}>
     <MenuIcon navigation={navigation} />
     <Text style={{color: ultraLightBlue, fontSize: 20}}>{title}</Text>
@@ -15,7 +26,7 @@ const Bar = ({navigation, title, percentage}) => (
   </View>
 );
 
-const MenuIcon = ({navigation}) => (
+const MenuIcon = ({navigation}: types.HomeScreenProps) => (
   <Icon
     name="three-bars"
     size={30}
