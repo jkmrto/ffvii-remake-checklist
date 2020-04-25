@@ -4,6 +4,11 @@ import * as domain from './../domain/Domain.js';
 
 const sideQuestsCollection = 'sidequests';
 
+export type SideQuest = {
+  title: string;
+  checked: boolean;
+};
+
 export async function LoadQuests(): Promise<domain.SideQuest[]> {
   let keys = await LocalStorage.getCollectionKeys(sideQuestsCollection);
 
