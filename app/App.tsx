@@ -17,7 +17,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import Quests from './Quests';
 import Bar from './components/Bar';
 import * as SideQuestsRepo from './repositories/SideQuests';
-import * as types from './types';
+import * as Domain from './Domain';
 
 const lightBlue = 'rgb(176,196,222)';
 const ultraLightBlue = 'rgb(240,248,255)';
@@ -29,11 +29,11 @@ type MyProps = {
 type MyState = {
   title: string;
   percentage: number;
-  list: SideQuestsRepo.SideQuest[];
+  list: Domain.SideQuest[];
   loading: boolean;
 };
 
-function calculatePercentage(list: Repo.SideQuest[]): number {
+function calculatePercentage(list: Domain.SideQuest[]): number {
   let count = 0;
   list.forEach(element => {
     if (element.checked) {

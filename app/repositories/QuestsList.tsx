@@ -1,3 +1,5 @@
+import * as Domain from './../Domain';
+
 let ch3 = [
   "Chadley's Report",
   'Lost Friends',
@@ -41,7 +43,7 @@ function mapToMissions(chapter: number, titleList: string[]) {
   });
 }
 
-let questsList = [
+let questsList: Domain.SideQuest[] = [
   ...mapToMissions(3, ch3),
   ...mapToMissions(8, ch8),
   ...mapToMissions(9, ch9),

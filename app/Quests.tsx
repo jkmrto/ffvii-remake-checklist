@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {ListItem} from 'react-native-elements';
 
-import * as domain from './domain/Domain';
+import * as domain from './Domain';
 
 type Props = {
   onPress: (arg0: number) => void;

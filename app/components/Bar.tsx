@@ -3,8 +3,6 @@ import {StyleSheet, View, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/Octicons';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 
-import * as types from './../types';
-
 const lightBlue = 'rgb(176,196,222)';
 const ultraLightBlue = 'rgb(240,248,255)';
 
@@ -26,7 +24,11 @@ const Bar = ({
   </View>
 );
 
-const MenuIcon = ({navigation}: types.HomeScreenProps) => (
+const MenuIcon = ({
+  navigation,
+}: {
+  navigation: DrawerNavigationProp<any, any>;
+}) => (
   <Icon
     name="three-bars"
     size={30}

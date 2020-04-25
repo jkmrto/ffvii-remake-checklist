@@ -1,15 +1,10 @@
 import questsList from './QuestsList';
 import * as LocalStorage from './LocalStorage';
-import * as domain from './../domain/Domain.js';
+import * as Domain from './../Domain.js';
 
 const sideQuestsCollection = 'sidequests';
 
-export type SideQuest = {
-  title: string;
-  checked: boolean;
-};
-
-export async function LoadQuests(): Promise<domain.SideQuest[]> {
+export async function LoadQuests(): Promise<Domain.SideQuest[]> {
   let keys = await LocalStorage.getCollectionKeys(sideQuestsCollection);
 
   if (keys.length === 0) {
@@ -23,7 +18,7 @@ export async function LoadQuests(): Promise<domain.SideQuest[]> {
   }
 }
 
-export function updateOne(item: domain.SideQuest) {
+export function updateOne(item: Domain.SideQuest) {
   let label = LocalStorage.buildLabel(sideQuestsCollection, item.index);
   LocalStorage.updateOne(label, JSON.stringify(item));
 }
