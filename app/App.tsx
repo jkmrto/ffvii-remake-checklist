@@ -1,19 +1,15 @@
 import React, {Component} from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  Button,
-  View,
-  Text,
-  ActivityIndicator,
-} from 'react-native';
+import {ScrollView, StyleSheet, Button, View, Text} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
 
 import questsList from './repositories/QuestsList';
 import * as Domain from './Domain';
 import * as Colors from './Colors';
+
+// Screens
 import SideQuestsScreen from './screens/SideQuestsScreen';
+import DevelopmentScreen from './screens/DevelopmentScreen';
 
 function calculatePercentage(list: Domain.SideQuest[]): number {
   let count = 0;
@@ -25,14 +21,6 @@ function calculatePercentage(list: Domain.SideQuest[]): number {
 
   return (100 * count) / list.length;
 }
-
-const DevelopmentScreen = () => {
-  return (
-    <View>
-      <Text> hola </Text>
-    </View>
-  );
-};
 
 const styles = StyleSheet.create({
   container: {
@@ -49,9 +37,9 @@ const Drawer = createDrawerNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Home">
+      <Drawer.Navigator initialRouteName="Development">
         <Drawer.Screen name="Side Quests" component={SideQuestsScreen} />
-        <Drawer.Screen name="Summons" component={DevelopmentScreen} />
+        <Drawer.Screen name="Development" component={DevelopmentScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
