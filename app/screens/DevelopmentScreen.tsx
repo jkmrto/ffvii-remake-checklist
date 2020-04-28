@@ -10,7 +10,7 @@ const file = './../repositories.csv';
 
 export type Weapon = {
   name: string;
-  character: boolean;
+  character: string;
   chapter: number;
   location: string;
   link: string;
@@ -41,6 +41,35 @@ async function loadCSV(pathToFile: string): Promise<Dic[]> {
   return listDics;
 }
 
+function checkFieldContainsString(field: string, dic: Dic): boolean {
+  if (dic[field] == null || typeof dic[field] != 'string') {
+    console.log('Unvalid value: ', dic[field]);
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function newWeaponFromDic(dic: Dic): Weapon | null {
+  if (!checkFieldContainsString('WEAPON', dic)) return null;
+  if (!checkFieldContainsString('CHARACTER', dic)) return null;
+  if (!checkFieldContainsString('LINK', dic)) return null;
+  if (!checkFieldContainsString('LOCATION', dic)) return null;
+
+  let chapter = parseInt(dic['CHAPTER']);
+  if (isNaN(chapter)) {
+    console.log('Unvalid value: ', dic['CHAPTER']);
+  }
+
+  return {
+    name: dic['WEAPON'],
+    character: dic['CHARACTER'],
+    chapter: chapter,
+    location: dic['LOCATION'],
+    link: dic['LINK'],
+  };
+}
+
 class DevelopmentScreen extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -49,12 +78,19 @@ class DevelopmentScreen extends Component<Props, State> {
 
   async componentDidMount() {
     var weaponsRaw = await loadCSV('weapons.csv');
-    console.log(weaponsRaw);
+    let weapons: Weapon[] = [];
+    weaponsRaw.forEach(dic => {
+      let weapon = newWeaponFromDic(dic);
+      if (weapon != null) {
+        weapons.push(weapon);
+      }
+    });
+
+    console.log(weapons);
   }
 
   render() {
     console.log('Loading CSV');
-
     return (
       <View>
         <Text> Development Screen </Text>
