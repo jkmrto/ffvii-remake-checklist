@@ -6,6 +6,7 @@ export type SideQuest = {
 };
 
 export type Weapon = {
+  index: number;
   name: string;
   character: string;
   chapter: number;

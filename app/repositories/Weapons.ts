@@ -35,18 +35,29 @@ function checkFieldContainsString(field: string, dic: Dic): boolean {
   }
 }
 
+function parseFieldFromDic(dic: Dic, field: string): number | null {
+  let chapter = parseInt(dic['CHAPTER']);
+  if (isNaN(chapter)) {
+    console.log('Unvalid value: ', dic['CHAPTER']);
+    return null;
+  }
+  return chapter;
+}
+
 function newWeaponFromDic(dic: Dic): Domain.Weapon | null {
   if (!checkFieldContainsString('WEAPON', dic)) return null;
   if (!checkFieldContainsString('CHARACTER', dic)) return null;
   if (!checkFieldContainsString('LINK', dic)) return null;
   if (!checkFieldContainsString('LOCATION', dic)) return null;
 
-  let chapter = parseInt(dic['CHAPTER']);
-  if (isNaN(chapter)) {
-    console.log('Unvalid value: ', dic['CHAPTER']);
-  }
+  let chapter = parseFieldFromDic(dic, 'CHAPTER');
+  if (chapter == null) return null;
+
+  let index = parseFieldFromDic(dic, 'INDEX');
+  if (index == null) return null;
 
   return {
+    index: index,
     name: dic['WEAPON'],
     character: dic['CHARACTER'],
     chapter: chapter,

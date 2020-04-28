@@ -11,11 +11,15 @@ type QuestProps = {
 
 export const Weapon = ({weapon}: QuestProps) => (
   <View style={styles.todoContainer}>
-    <View style={{flex: 0.8}}>
+    <View style={{flex: 0.5}}>
       <Text style={styles.todoText}>{weapon.name}</Text>
+
       <Text style={styles.chapter}> {'Chapter ' + weapon.chapter}</Text>
     </View>
 
+    <View style={{flex: 0.3}}>
+      <Text> {weapon.character}</Text>
+    </View>
     <View style={{flex: 0.2}}>
       <CheckBox
         center
@@ -50,6 +54,9 @@ const styles = StyleSheet.create({
   },
   chapter: {
     color: 'rgb(220,228,235)',
+  },
+  subs: {
+    flexDirection: 'row',
   },
 });
 
