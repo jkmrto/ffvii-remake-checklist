@@ -37,9 +37,9 @@ const Drawer = createDrawerNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Development">
+      <Drawer.Navigator initialRouteName="Weapons">
         <Drawer.Screen name="Side Quests" component={SideQuestsScreen} />
-        <Drawer.Screen name="Development" component={WeaponsScreen} />
+        <Drawer.Screen name="Weapons" component={WeaponsScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
