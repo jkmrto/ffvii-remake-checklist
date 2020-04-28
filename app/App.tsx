@@ -9,7 +9,7 @@ import * as Colors from './Colors';
 
 // Screens
 import SideQuestsScreen from './screens/SideQuestsScreen';
-import DevelopmentScreen from './screens/DevelopmentScreen';
+import WeaponsScreen from './screens/WeaponsScreen';
 
 function calculatePercentage(list: Domain.SideQuest[]): number {
   let count = 0;
@@ -39,7 +39,7 @@ export default function App() {
     <NavigationContainer>
       <Drawer.Navigator initialRouteName="Development">
         <Drawer.Screen name="Side Quests" component={SideQuestsScreen} />
-        <Drawer.Screen name="Development" component={DevelopmentScreen} />
+        <Drawer.Screen name="Development" component={WeaponsScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

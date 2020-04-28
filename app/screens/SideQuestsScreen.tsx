@@ -16,19 +16,19 @@ import * as Domain from './../Domain';
 import Bar from './../components/Bar';
 import SideQuest from './SideQuest';
 
-type MyProps = {
+type Props = {
   navigation: DrawerNavigationProp<any, any>;
 };
 
-type MyState = {
+type State = {
   title: string;
   percentage: number;
   list: Domain.SideQuest[];
   loading: boolean;
 };
 
-class SideQuestsScreen extends Component<MyProps, MyState> {
-  constructor(props: MyProps) {
+class SideQuestsScreen extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       title: 'Side Quests',
