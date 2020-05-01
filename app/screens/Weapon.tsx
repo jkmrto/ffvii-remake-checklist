@@ -1,23 +1,39 @@
 import React, {Component} from 'react';
-import {ScrollView, StyleSheet, View, Text} from 'react-native';
+import {
+  Image,
+  Linking,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {CheckBox} from 'react-native-elements';
 
 import * as Domain from './../Domain';
 import * as Colors from './../Colors';
 
+var icon = require('./../assets/fandom.jpeg');
+
 type QuestProps = {
   weapon: Domain.Weapon;
+  onPressFandom: (arg0: string) => void;
 };
 
-export const Weapon = ({weapon}: QuestProps) => (
+export const Weapon = ({weapon, onPressFandom}: QuestProps) => (
   <View style={styles.todoContainer}>
-    <View style={{flex: 0.5}}>
+    <View style={{flex: 0.15}}>
+      <TouchableOpacity onPress={onPressFandom.bind(null, weapon.link)}>
+        <Image style={{width: 30, height: 30}} source={icon} />
+      </TouchableOpacity>
+    </View>
+    <View style={{flex: 0.4}}>
       <Text style={styles.todoText}>{weapon.name}</Text>
 
       <Text style={styles.chapter}> {'Chapter ' + weapon.chapter}</Text>
     </View>
 
-    <View style={{flex: 0.3}}>
+    <View style={{flex: 0.25}}>
       <Text> {weapon.character}</Text>
     </View>
     <View style={{flex: 0.2}}>

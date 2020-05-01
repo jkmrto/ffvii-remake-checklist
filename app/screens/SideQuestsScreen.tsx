@@ -7,7 +7,6 @@ import {
   Text,
   ActivityIndicator,
 } from 'react-native';
-
 import update from 'immutability-helper';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 
