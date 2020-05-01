@@ -21,7 +21,7 @@ export async function getCollectionKeys(collection: string) {
   return filteredKeys;
 }
 
-type Entry = {
+export type Entry = {
   index: number;
   key: string;
   value: string;

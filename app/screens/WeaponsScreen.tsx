@@ -9,7 +9,7 @@ import BackBar from './../components/BackBar';
 
 import * as Domain from './../Domain';
 import Weapon from './Weapon';
-import * as WeaponRepo from './../repositories/Weapons';
+import * as Repo from './../repositories/Weapons';
 
 type Props = {
   navigation: DrawerNavigationProp<any, any>;
@@ -34,7 +34,7 @@ class WeaponsScreen extends Component<Props, State> {
   }
 
   async componentDidMount() {
-    let weapons = await WeaponRepo.loadWeapons();
+    let weapons = await Repo.load();
     this.setState({
       weapons: weapons,
     });
@@ -51,7 +51,7 @@ class WeaponsScreen extends Component<Props, State> {
       //percentage: calculatePercentage(list),
     });
 
-    //SideQuestsRepo.updateOne(list[questIndex]);
+    Repo.updateOne(weapons[index]);
   }
 
   onPressFandom(uri: string) {

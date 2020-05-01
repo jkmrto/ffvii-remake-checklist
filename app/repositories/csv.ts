@@ -8,7 +8,7 @@ export async function load(pathToFile: string): Promise<types.Dic[]> {
   var lines = fileContents.split('\n');
   var keys = lines[0].split(',');
 
-  lines.slice(1, lines.length).forEach(line => {
+  lines.slice(1, lines.length).forEach((line, lineIndex) => {
     let dic: types.Dic = {};
     var lineSplit = line.split(',');
     if (lineSplit.length == keys.length) {
@@ -16,6 +16,8 @@ export async function load(pathToFile: string): Promise<types.Dic[]> {
         dic[keys[i]] = lineSplit[i];
       }
       listDics.push(dic);
+    } else {
+      console.log('Error parsing this line: ', line);
     }
   });
 
