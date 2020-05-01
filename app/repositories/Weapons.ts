@@ -1,59 +1,17 @@
-import * as fs from 'react-native-fs';
 import * as Domain from './../Domain';
+import * as types from './../types';
+import * as csv from './csv';
 
-interface Dic {
-  [key: string]: string;
-}
+function newWeaponFromDic(dic: types.Dic): Domain.Weapon | null {
+  if (!csv.checkFieldContainsString('WEAPON', dic)) return null;
+  if (!csv.checkFieldContainsString('CHARACTER', dic)) return null;
+  if (!csv.checkFieldContainsString('LINK', dic)) return null;
+  if (!csv.checkFieldContainsString('LOCATION', dic)) return null;
 
-export async function loadCSV(pathToFile: string): Promise<Dic[]> {
-  var listDics: Dic[] = [];
-
-  var fileContents = await fs.readFileAssets(pathToFile, 'utf8');
-  var lines = fileContents.split('\n');
-  var keys = lines[0].split(',');
-
-  lines.slice(1, lines.length).forEach(line => {
-    let dic: Dic = {};
-    var lineSplit = line.split(',');
-    if (lineSplit.length == keys.length) {
-      for (var i = 0; i < lineSplit.length; i++) {
-        dic[keys[i]] = lineSplit[i];
-      }
-      listDics.push(dic);
-    }
-  });
-
-  return listDics;
-}
-
-function checkFieldContainsString(field: string, dic: Dic): boolean {
-  if (dic[field] == null || typeof dic[field] != 'string') {
-    console.log('Unvalid value: ', dic[field]);
-    return false;
-  } else {
-    return true;
-  }
-}
-
-function parseFieldFromDic(dic: Dic, field: string): number | null {
-  let chapter = parseInt(dic[field]);
-  if (isNaN(chapter)) {
-    console.log('Unvalid value: ', dic[field]);
-    return null;
-  }
-  return chapter;
-}
-
-function newWeaponFromDic(dic: Dic): Domain.Weapon | null {
-  if (!checkFieldContainsString('WEAPON', dic)) return null;
-  if (!checkFieldContainsString('CHARACTER', dic)) return null;
-  if (!checkFieldContainsString('LINK', dic)) return null;
-  if (!checkFieldContainsString('LOCATION', dic)) return null;
-
-  let chapter = parseFieldFromDic(dic, 'CHAPTER');
+  let chapter = csv.parseFieldFromDic(dic, 'CHAPTER');
   if (chapter == null) return null;
 
-  let index = parseFieldFromDic(dic, 'INDEX');
+  let index = csv.parseFieldFromDic(dic, 'INDEX');
   if (index == null) return null;
 
   return {
@@ -68,7 +26,7 @@ function newWeaponFromDic(dic: Dic): Domain.Weapon | null {
 }
 
 export async function loadWeapons(): Promise<Domain.Weapon[]> {
-  let weaponsRaw = await loadCSV('weapons.csv');
+  let weaponsRaw = await csv.load('weapons.csv');
   let weapons: Domain.Weapon[] = [];
   weaponsRaw.forEach(dic => {
     let weapon = newWeaponFromDic(dic);
