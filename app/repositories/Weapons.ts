@@ -36,9 +36,9 @@ function checkFieldContainsString(field: string, dic: Dic): boolean {
 }
 
 function parseFieldFromDic(dic: Dic, field: string): number | null {
-  let chapter = parseInt(dic['CHAPTER']);
+  let chapter = parseInt(dic[field]);
   if (isNaN(chapter)) {
-    console.log('Unvalid value: ', dic['CHAPTER']);
+    console.log('Unvalid value: ', dic[field]);
     return null;
   }
   return chapter;
@@ -63,6 +63,7 @@ function newWeaponFromDic(dic: Dic): Domain.Weapon | null {
     chapter: chapter,
     location: dic['LOCATION'],
     link: dic['LINK'],
+    checked: false,
   };
 }
 

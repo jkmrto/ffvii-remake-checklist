@@ -3,6 +3,7 @@ import {ScrollView, StyleSheet, View, Text, Image} from 'react-native';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {WebView} from 'react-native-webview';
 
+import update from 'immutability-helper';
 import Bar from './../components/Bar';
 import BackBar from './../components/BackBar';
 
@@ -37,6 +38,20 @@ class WeaponsScreen extends Component<Props, State> {
     this.setState({
       weapons: weapons,
     });
+  }
+
+  onPressCheck(index: number) {
+    let newChecked = !this.state.weapons[index].checked;
+    let weapons = update(this.state.weapons, {
+      [index]: {checked: {$set: newChecked}},
+    });
+
+    this.setState({
+      weapons: weapons,
+      //percentage: calculatePercentage(list),
+    });
+
+    //SideQuestsRepo.updateOne(list[questIndex]);
   }
 
   onPressFandom(uri: string) {
@@ -77,6 +92,7 @@ class WeaponsScreen extends Component<Props, State> {
                 <Weapon
                   key={weapon.index}
                   weapon={weapon}
+                  onPressCheck={this.onPressCheck.bind(this)}
                   onPressFandom={this.onPressFandom.bind(this)}
                 />
               );

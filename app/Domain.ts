@@ -12,4 +12,5 @@ export type Weapon = {
   chapter: number;
   location: string;
   link: string;
+  checked: boolean;
 };
