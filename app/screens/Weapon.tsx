@@ -25,7 +25,16 @@ export const Weapon = ({weapon, onPressFandom, onPressCheck}: QuestProps) => (
   <View style={styles.todoContainer}>
     <View style={{flex: 0.15}}>
       <TouchableOpacity onPress={onPressFandom.bind(null, weapon.link)}>
-        <Image style={{width: 30, height: 30}} source={icon} />
+        <Image
+          style={{
+            borderWidth: 3,
+            borderColor: 'rgb(128, 128, 128)',
+            borderRadius: 5,
+            width: 35,
+            height: 35,
+          }}
+          source={icon}
+        />
       </TouchableOpacity>
     </View>
     <View style={{flex: 0.4}}>

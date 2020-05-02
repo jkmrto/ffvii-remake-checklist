@@ -66,25 +66,23 @@ class SideQuestsScreen extends Component<Props, State> {
 
   render() {
     return (
-      <View>
+      <View style={{flex: 1}}>
         <Bar
           title={this.state.title}
           navigation={this.props.navigation}
           percentage={this.state.percentage}
         />
-        <View>
-          <ScrollView>
-            {this.state.list.map((quest, i) => {
-              return (
-                <SideQuest
-                  key={quest.index}
-                  quest={quest}
-                  onPress={this.onPress.bind(this)}
-                />
-              );
-            })}
-          </ScrollView>
-        </View>
+        <ScrollView>
+          {this.state.list.map((quest, i) => {
+            return (
+              <SideQuest
+                key={quest.index}
+                quest={quest}
+                onPress={this.onPress.bind(this)}
+              />
+            );
+          })}
+        </ScrollView>
       </View>
     );
   }

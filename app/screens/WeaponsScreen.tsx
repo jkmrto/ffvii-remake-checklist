@@ -81,7 +81,7 @@ class WeaponsScreen extends Component<Props, State> {
       );
     } else {
       return (
-        <View>
+        <View style={{flex: 1}}>
           <View>
             <Bar
               title={this.state.title}
