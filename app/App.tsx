@@ -1,9 +1,23 @@
 import React, {Component} from 'react';
-import {ScrollView, StyleSheet, Button, View, Text} from 'react-native';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import {CircularProgress} from 'react-native-svg-circular-progress';
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Button,
+  View,
+  Text,
+} from 'react-native';
+//import {createDrawerNavigator, DrawerItemList} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
 
-import questsList from './repositories/QuestsList';
+import {
+  createDrawerNavigator,
+  DrawerItems,
+  DrawerContentComponentProps,
+} from 'react-navigation-drawer';
+
+import {createAppContainer} from 'react-navigation';
 import * as Domain from './Domain';
 import * as Colors from './Colors';
 
@@ -32,15 +46,40 @@ const styles = StyleSheet.create({
   },
 });
 
-const Drawer = createDrawerNavigator();
+const CustomDrawerContentComponent = (props: DrawerContentComponentProps) => (
+  <ScrollView>
+    <SafeAreaView style={stylesMeh.container}>
+      <Text>Percentage : 100% </Text>
+      <CircularProgress percentage={50} />
+      <DrawerItems {...props} />
+    </SafeAreaView>
+  </ScrollView>
+);
 
-export default function App() {
-  return (
-    <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Weapons">
-        <Drawer.Screen name="Side Quests" component={SideQuestsScreen} />
-        <Drawer.Screen name="Weapons" component={WeaponsScreen} />
-      </Drawer.Navigator>
-    </NavigationContainer>
-  );
-}
+const Drawer = createDrawerNavigator(
+  {
+    'Side Quests': {
+      screen: SideQuestsScreen,
+    },
+    Weapons: {
+      screen: WeaponsScreen,
+    },
+  },
+  {
+    initialRouteName: 'Side Quests',
+    contentComponent: CustomDrawerContentComponent,
+    contentOptions: {
+      activeTintColor: '#000000',
+      activeBackgroundColor: '#e6e6e6',
+    },
+  },
+);
+
+const App = createAppContainer(Drawer);
+export default App;
+
+const stylesMeh = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
