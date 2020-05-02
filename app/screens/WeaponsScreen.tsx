@@ -20,6 +20,7 @@ type State = {
   weapons: Domain.Weapon[];
   browserOpened: boolean;
   webUri: string;
+  percentage: number;
 };
 
 class WeaponsScreen extends Component<Props, State> {
@@ -30,6 +31,7 @@ class WeaponsScreen extends Component<Props, State> {
       weapons: [],
       title: 'Weapons',
       webUri: '',
+      percentage: 0,
     };
   }
 
@@ -37,6 +39,7 @@ class WeaponsScreen extends Component<Props, State> {
     let weapons = await Repo.load();
     this.setState({
       weapons: weapons,
+      percentage: calculatePercentage(weapons),
     });
   }
 
@@ -48,7 +51,7 @@ class WeaponsScreen extends Component<Props, State> {
 
     this.setState({
       weapons: weapons,
-      //percentage: calculatePercentage(list),
+      percentage: calculatePercentage(weapons),
     });
 
     Repo.updateOne(weapons[index]);
@@ -83,7 +86,7 @@ class WeaponsScreen extends Component<Props, State> {
             <Bar
               title={this.state.title}
               navigation={this.props.navigation}
-              percentage={80}
+              percentage={this.state.percentage}
             />
           </View>
           <ScrollView>
@@ -107,5 +110,16 @@ class WeaponsScreen extends Component<Props, State> {
 const WebComponent = ({uri}: {uri: string}) => {
   return <WebView source={{uri}} />;
 };
+
+function calculatePercentage(list: Domain.Weapon[]): number {
+  let count = 0;
+  list.forEach(element => {
+    if (element.checked) {
+      count = count + 1;
+    }
+  });
+
+  return (100 * count) / list.length;
+}
 
 export default WeaponsScreen;

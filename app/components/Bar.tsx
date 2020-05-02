@@ -17,7 +17,7 @@ const Bar = ({
     <MenuIcon navigation={navigation} />
     <Text style={{color: Colors.blue.ultraLight, fontSize: 20}}>{title}</Text>
     <Text style={{color: Colors.blue.ultraLight, fontSize: 20}}>
-      {percentage + '%'}
+      {percentage.toFixed(0) + '%'}
     </Text>
   </View>
 );

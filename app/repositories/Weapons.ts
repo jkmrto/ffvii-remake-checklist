@@ -20,7 +20,7 @@ export async function load(): Promise<Domain.Weapon[]> {
   return weapons;
 }
 
-export function updateOne(item: Domain.SideQuest) {
+export function updateOne(item: Domain.Weapon) {
   let label = LocalStorage.buildLabel(collection, item.index);
   LocalStorage.updateOne(label, JSON.stringify(item));
 }

@@ -70,7 +70,7 @@ class SideQuestsScreen extends Component<Props, State> {
         <Bar
           title={this.state.title}
           navigation={this.props.navigation}
-          percentage={80}
+          percentage={this.state.percentage}
         />
         <View>
           <ScrollView>
