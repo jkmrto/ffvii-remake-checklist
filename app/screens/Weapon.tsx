@@ -12,8 +12,7 @@ import {CheckBox} from 'react-native-elements';
 
 import * as Domain from './../Domain';
 import * as Colors from './../Colors';
-
-var icon = require('./../assets/fandom.jpeg');
+import FandomIcon from './../components/FandomIcon';
 
 type QuestProps = {
   weapon: Domain.Weapon;
@@ -24,18 +23,7 @@ type QuestProps = {
 export const Weapon = ({weapon, onPressFandom, onPressCheck}: QuestProps) => (
   <View style={styles.todoContainer}>
     <View style={{flex: 0.15}}>
-      <TouchableOpacity onPress={onPressFandom.bind(null, weapon.link)}>
-        <Image
-          style={{
-            borderWidth: 3,
-            borderColor: 'rgb(128, 128, 128)',
-            borderRadius: 5,
-            width: 35,
-            height: 35,
-          }}
-          source={icon}
-        />
-      </TouchableOpacity>
+      <FandomIcon onPress={onPressFandom} link={weapon.link} />
     </View>
     <View style={{flex: 0.4}}>
       <Text style={styles.todoText}>{weapon.name}</Text>
