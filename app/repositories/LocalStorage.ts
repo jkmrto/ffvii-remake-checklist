@@ -1,7 +1,15 @@
 import AsyncStorage from '@react-native-community/async-storage';
+import * as Types from './../types';
 
-export function buildLabel(collection: string, index: number) {
-  return collection + '_' + index;
+export async function load(collection: string): Promise<Types.DicNumberToMap> {
+  let keys = await getCollectionKeys(collection);
+  let entries = await getByKeys(keys);
+
+  let indexToWeapon: Types.DicNumberToMap = {};
+  entries.forEach((entry: Entry) => {
+    indexToWeapon[entry.index] = JSON.parse(entry.value);
+  });
+  return indexToWeapon;
 }
 
 export async function updateOne(key: string, value: string) {
@@ -70,4 +78,8 @@ export function saveAll(collection: string, list: any[]) {
   });
 
   AsyncStorage.multiSet(formattedList);
+}
+
+export function buildLabel(collection: string, index: number) {
+  return collection + '_' + index;
 }

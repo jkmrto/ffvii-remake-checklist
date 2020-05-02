@@ -1,24 +1,25 @@
-import questsList from './QuestsList';
 import * as LocalStorage from './LocalStorage';
+import * as SideQuestsCSV from './SideQuestsCSV';
 import * as Domain from './../Domain.js';
 
-const sideQuestsCollection = 'sidequests';
+const collection = 'sidequests';
 
 export async function LoadQuests(): Promise<Domain.SideQuest[]> {
-  let keys = await LocalStorage.getCollectionKeys(sideQuestsCollection);
+  let sideQuests = await SideQuestsCSV.load();
+  let indexToStorageSideQuest = await LocalStorage.load(collection);
 
-  if (keys.length === 0) {
-    console.log('Loading from scratch');
-    await LocalStorage.saveAll(sideQuestsCollection, questsList);
-    return questsList;
-  } else {
-    console.log('Loading from memory');
-    let questsEntries = await LocalStorage.getByKeys(keys);
-    return questsEntries.map(entry => JSON.parse(entry.value));
+  for (let i = 0; i < sideQuests.length; i++) {
+    if (indexToStorageSideQuest[sideQuests[i].index] != undefined) {
+      let isChecked = indexToStorageSideQuest[sideQuests[i].index]['checked'];
+      if (typeof isChecked === 'boolean') {
+        sideQuests[i].checked = isChecked;
+      }
+    }
   }
+  return sideQuests;
 }
 
 export function updateOne(item: Domain.SideQuest) {
-  let label = LocalStorage.buildLabel(sideQuestsCollection, item.index);
+  let label = LocalStorage.buildLabel(collection, item.index);
   LocalStorage.updateOne(label, JSON.stringify(item));
 }

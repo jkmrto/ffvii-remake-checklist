@@ -1,8 +1,8 @@
 export type SideQuest = {
+  index: number;
   title: string;
   checked: boolean;
   chapter: number;
-  index: number;
 };
 
 export type Weapon = {
