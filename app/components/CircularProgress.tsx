@@ -41,7 +41,7 @@ interface Props {
   fillColor?: string;
   progressWidth?: number;
   size?: number;
-  children?: React.Component;
+  children?: Element;
 }
 
 const CircularProgress = ({

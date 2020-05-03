@@ -40,7 +40,6 @@ class SideQuestsScreen extends Component<Props, State> {
 
   async componentDidMount() {
     try {
-      console.log('Mounting');
       let quests = await SideQuestsRepo.LoadQuests();
       this.setState({
         loading: false,

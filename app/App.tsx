@@ -21,7 +21,11 @@ import CircularProgress from './components/CircularProgress';
 
 // Screens
 import SideQuestsScreen from './screens/SideQuestsScreen';
+import SideQuestsScreenTest from './SideQuestsScreenTest';
 import WeaponsScreen from './screens/WeaponsScreen';
+
+import * as GlobalContext from './GlobalContext';
+import * as SQContext from './SideQuestsContext';
 
 const styles = StyleSheet.create({
   container: {
@@ -35,31 +39,31 @@ const styles = StyleSheet.create({
 
 type State = {};
 
-class CustomDrawerContentComponent extends Component<
-  DrawerContentComponentProps,
-  State
-> {
-  componentDidMount() {
-    console.log('hasta luego');
-  }
+const CustomDrawerContentComponent = (props: DrawerContentComponentProps) => {
+  const theme = GlobalContext.useTheme();
+  console.log(theme);
 
-  render() {
-    return (
-      <ScrollView>
-        <SafeAreaView style={stylesMeh.container}>
-          <Text>Percentage : 100% </Text>
-          <CircularProgress percentage={50} />
-          <DrawerItems {...this.props} />
-        </SafeAreaView>
-      </ScrollView>
-    );
-  }
-}
+  return (
+    <ScrollView>
+      <SafeAreaView style={{flex: 1}}>
+        <DrawerItems {...props} />
+        <CircularProgress percentage={theme.isOnline}>
+          <View>
+            <Text>{theme.isOnline}%</Text>
+          </View>
+        </CircularProgress>
+      </SafeAreaView>
+    </ScrollView>
+  );
+};
 
 const Drawer = createDrawerNavigator(
   {
     'Side Quests': {
       screen: SideQuestsScreen,
+    },
+    Test: {
+      screen: SideQuestsScreenTest,
     },
     Weapons: {
       screen: WeaponsScreen,
@@ -75,11 +79,15 @@ const Drawer = createDrawerNavigator(
   },
 );
 
-const App = createAppContainer(Drawer);
-export default App;
+const AppContainer = createAppContainer(Drawer);
+const App = () => {
+  return (
+    <GlobalContext.GlobalContextProvider>
+      <SQContext.Provider>
+        <AppContainer />
+      </SQContext.Provider>
+    </GlobalContext.GlobalContextProvider>
+  );
+};
 
-const stylesMeh = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+export default App;
