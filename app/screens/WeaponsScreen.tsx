@@ -2,14 +2,15 @@ import React, {Component} from 'react';
 import {ScrollView, StyleSheet, View, Text, Image} from 'react-native';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {WebView} from 'react-native-webview';
-
 import update from 'immutability-helper';
+
 import Bar from './../components/Bar';
 import BackBar from './../components/BackBar';
 
 import * as Domain from './../Domain';
-import Weapon from './Weapon';
+import * as Common from './../Common';
 import * as Repo from './../repositories/Weapons';
+import Weapon from './Weapon';
 
 type Props = {
   navigation: DrawerNavigationProp<any, any>;
@@ -39,7 +40,7 @@ class WeaponsScreen extends Component<Props, State> {
     let weapons = await Repo.load();
     this.setState({
       weapons: weapons,
-      percentage: calculatePercentage(weapons),
+      percentage: Common.calculatePercentage(weapons),
     });
   }
 
@@ -51,7 +52,7 @@ class WeaponsScreen extends Component<Props, State> {
 
     this.setState({
       weapons: weapons,
-      percentage: calculatePercentage(weapons),
+      percentage: Common.calculatePercentage(weapons),
     });
 
     Repo.updateOne(weapons[index]);
@@ -110,16 +111,5 @@ class WeaponsScreen extends Component<Props, State> {
 const WebComponent = ({uri}: {uri: string}) => {
   return <WebView source={{uri}} />;
 };
-
-function calculatePercentage(list: Domain.Weapon[]): number {
-  let count = 0;
-  list.forEach(element => {
-    if (element.checked) {
-      count = count + 1;
-    }
-  });
-
-  return (100 * count) / list.length;
-}
 
 export default WeaponsScreen;

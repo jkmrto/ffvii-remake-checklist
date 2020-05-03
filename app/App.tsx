@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {CircularProgress} from 'react-native-svg-circular-progress';
 import {
   SafeAreaView,
   ScrollView,
@@ -8,9 +7,7 @@ import {
   View,
   Text,
 } from 'react-native';
-//import {createDrawerNavigator, DrawerItemList} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
-
 import {
   createDrawerNavigator,
   DrawerItems,
@@ -20,21 +17,11 @@ import {
 import {createAppContainer} from 'react-navigation';
 import * as Domain from './Domain';
 import * as Colors from './Colors';
+import CircularProgress from './components/CircularProgress';
 
 // Screens
 import SideQuestsScreen from './screens/SideQuestsScreen';
 import WeaponsScreen from './screens/WeaponsScreen';
-
-function calculatePercentage(list: Domain.SideQuest[]): number {
-  let count = 0;
-  list.forEach(element => {
-    if (element.checked) {
-      count = count + 1;
-    }
-  });
-
-  return (100 * count) / list.length;
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -46,15 +33,28 @@ const styles = StyleSheet.create({
   },
 });
 
-const CustomDrawerContentComponent = (props: DrawerContentComponentProps) => (
-  <ScrollView>
-    <SafeAreaView style={stylesMeh.container}>
-      <Text>Percentage : 100% </Text>
-      <CircularProgress percentage={50} />
-      <DrawerItems {...props} />
-    </SafeAreaView>
-  </ScrollView>
-);
+type State = {};
+
+class CustomDrawerContentComponent extends Component<
+  DrawerContentComponentProps,
+  State
+> {
+  componentDidMount() {
+    console.log('hasta luego');
+  }
+
+  render() {
+    return (
+      <ScrollView>
+        <SafeAreaView style={stylesMeh.container}>
+          <Text>Percentage : 100% </Text>
+          <CircularProgress percentage={50} />
+          <DrawerItems {...this.props} />
+        </SafeAreaView>
+      </ScrollView>
+    );
+  }
+}
 
 const Drawer = createDrawerNavigator(
   {

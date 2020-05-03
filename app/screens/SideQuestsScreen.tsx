@@ -12,6 +12,7 @@ import {DrawerNavigationProp} from '@react-navigation/drawer';
 
 import * as SideQuestsRepo from './../repositories/SideQuests';
 import * as Domain from './../Domain';
+import * as Common from './../Common';
 import Bar from './../components/Bar';
 import SideQuest from './SideQuest';
 
@@ -39,11 +40,12 @@ class SideQuestsScreen extends Component<Props, State> {
 
   async componentDidMount() {
     try {
+      console.log('Mounting');
       let quests = await SideQuestsRepo.LoadQuests();
       this.setState({
         loading: false,
         list: quests,
-        percentage: calculatePercentage(quests),
+        percentage: Common.calculatePercentage(quests),
       });
     } catch (err) {
       console.log('Error fetching data-----------', err);
@@ -58,7 +60,7 @@ class SideQuestsScreen extends Component<Props, State> {
 
     this.setState({
       list: list,
-      percentage: calculatePercentage(list),
+      percentage: Common.calculatePercentage(list),
     });
 
     SideQuestsRepo.updateOne(list[questIndex]);
@@ -86,17 +88,6 @@ class SideQuestsScreen extends Component<Props, State> {
       </View>
     );
   }
-}
-
-function calculatePercentage(list: Domain.SideQuest[]): number {
-  let count = 0;
-  list.forEach(element => {
-    if (element.checked) {
-      count = count + 1;
-    }
-  });
-
-  return (100 * count) / list.length;
 }
 
 export default SideQuestsScreen;
