@@ -21,11 +21,9 @@ import CircularProgress from './components/CircularProgress';
 
 // Screens
 import SideQuestsScreen from './screens/SideQuestsScreen';
-import SideQuestsScreenTest from './SideQuestsScreenTest';
 import WeaponsScreen from './screens/WeaponsScreen';
 
 import * as GlobalContext from './GlobalContext';
-import * as SQContext from './SideQuestsContext';
 
 const styles = StyleSheet.create({
   container: {
@@ -41,7 +39,6 @@ type State = {};
 
 const CustomDrawerContentComponent = (props: DrawerContentComponentProps) => {
   const theme = GlobalContext.useTheme();
-  console.log(theme);
 
   return (
     <ScrollView>
@@ -62,9 +59,6 @@ const Drawer = createDrawerNavigator(
     'Side Quests': {
       screen: SideQuestsScreen,
     },
-    Test: {
-      screen: SideQuestsScreenTest,
-    },
     Weapons: {
       screen: WeaponsScreen,
     },
@@ -83,9 +77,7 @@ const AppContainer = createAppContainer(Drawer);
 const App = () => {
   return (
     <GlobalContext.GlobalContextProvider>
-      <SQContext.Provider>
-        <AppContainer />
-      </SQContext.Provider>
+      <AppContainer />
     </GlobalContext.GlobalContextProvider>
   );
 };
