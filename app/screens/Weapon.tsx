@@ -1,13 +1,5 @@
-import React, {Component} from 'react';
-import {
-  Image,
-  Linking,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
 import {CheckBox} from 'react-native-elements';
 
 import * as Domain from './../Domain';

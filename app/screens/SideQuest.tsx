@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {ScrollView, StyleSheet, View, Text} from 'react-native';
+import React from 'react';
+import {StyleSheet, View, Text} from 'react-native';
 import {CheckBox} from 'react-native-elements';
 
 import * as Colors from './../Colors';

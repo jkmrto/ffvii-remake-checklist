@@ -1,5 +1,5 @@
-import React, {Component, useState, useEffect} from 'react';
-import {ScrollView, View, Text} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {ScrollView, View} from 'react-native';
 import update from 'immutability-helper';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 
@@ -45,7 +45,7 @@ const SideQuestsScreenTest = (props: Props) => {
         percentage={percentage}
       />
       <ScrollView>
-        {list.map((quest, i) => {
+        {list.map(quest => {
           return (
             <SideQuest key={quest.index} quest={quest} onPress={onPress} />
           );

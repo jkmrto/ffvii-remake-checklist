@@ -8,7 +8,7 @@ export async function load(pathToFile: string): Promise<types.Dic[]> {
   var lines = fileContents.split('\n');
   var keys = lines[0].split(',');
 
-  lines.slice(1, lines.length).forEach((line, lineIndex) => {
+  lines.slice(1, lines.length).forEach(line => {
     let dic: types.Dic = {};
     var lineSplit = line.split(',');
     if (lineSplit.length == keys.length) {

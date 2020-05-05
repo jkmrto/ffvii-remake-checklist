@@ -1,8 +1,6 @@
 import * as React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {DrawerNavigationProp} from '@react-navigation/drawer';
-import * as Colors from './../Colors';
 
 type Props = {
   onPressBackArrow: () => void;

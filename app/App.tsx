@@ -1,13 +1,5 @@
-import React, {Component} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Button,
-  View,
-  Text,
-} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
+import React from 'react';
+import {SafeAreaView, ScrollView, View, Text} from 'react-native';
 import {
   createDrawerNavigator,
   DrawerItems,
@@ -15,8 +7,6 @@ import {
 } from 'react-navigation-drawer';
 
 import {createAppContainer} from 'react-navigation';
-import * as Domain from './Domain';
-import * as Colors from './Colors';
 import CircularProgress from './components/CircularProgress';
 
 // Screens
@@ -24,18 +14,6 @@ import SideQuestsScreen from './screens/SideQuestsScreen';
 import WeaponsScreen from './screens/WeaponsScreen';
 
 import * as GlobalContext from './GlobalContext';
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    color: '#888',
-  },
-  main: {
-    flex: 1,
-  },
-});
-
-type State = {};
 
 const CustomDrawerContentComponent = (props: DrawerContentComponentProps) => {
   const theme = GlobalContext.useTheme();
