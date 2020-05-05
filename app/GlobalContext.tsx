@@ -1,20 +1,27 @@
 import React from 'react';
+import * as Domain from './Domain';
 
 interface ContextType {
-  isOnline: number;
-  onPress: () => void;
+  percentage: number;
+  setStats: (stats: Domain.Stats[]) => void;
 }
 
 export const GlobalContext = React.createContext({} as ContextType);
 
 export class GlobalContextProvider extends React.Component {
   state = {
-    isOnline: 55,
+    percentage: 55,
   };
 
-  onPress() {
+  setStats(stats: Domain.Stats[]) {
     this.setState({
-      isOnline: this.state.isOnline + 1,
+      percentage: stats[0].checked / stats[0].total,
+    });
+  }
+
+  onPress(stats: Domain.Stats[]) {
+    this.setState({
+      percentage: stats[0].checked / stats[0].total,
     });
   }
 
@@ -22,8 +29,8 @@ export class GlobalContextProvider extends React.Component {
     return (
       <GlobalContext.Provider
         value={{
-          isOnline: this.state.isOnline,
-          onPress: this.onPress.bind(this),
+          percentage: this.state.percentage,
+          setStats: this.onPress.bind(this),
         }}>
         {this.props.children}
       </GlobalContext.Provider>

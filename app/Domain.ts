@@ -14,3 +14,8 @@ export type Weapon = {
   link: string;
   checked: boolean;
 };
+
+export type Stats = {
+  total: number;
+  checked: number;
+};

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {SafeAreaView, ScrollView, View, Text} from 'react-native';
 import {
   createDrawerNavigator,
@@ -13,17 +13,27 @@ import SideQuestsScreen from './screens/SideQuestsScreen';
 import WeaponsScreen from './screens/WeaponsScreen';
 
 import * as GlobalContext from './GlobalContext';
+import * as StatsRepo from './repositories/Stats';
 
 const CustomDrawerContentComponent = (props: DrawerContentComponentProps) => {
   const theme = GlobalContext.useTheme();
+
+  useEffect(() => {
+    async function mountDrawer() {
+      console.log('Mounting');
+      let stats = await StatsRepo.load();
+      theme.setStats(stats);
+    }
+    mountDrawer();
+  }, []);
 
   return (
     <ScrollView>
       <SafeAreaView style={{flex: 1}}>
         <DrawerItems {...props} />
-        <CircularProgress percentage={theme.isOnline}>
+        <CircularProgress percentage={theme.percentage * 100}>
           <View>
-            <Text>{theme.isOnline}%</Text>
+            <Text>{(theme.percentage * 100).toFixed(0)}%</Text>
           </View>
         </CircularProgress>
       </SafeAreaView>

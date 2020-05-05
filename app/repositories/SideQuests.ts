@@ -2,7 +2,7 @@ import * as LocalStorage from './LocalStorage';
 import * as SideQuestsCSV from './SideQuestsCSV';
 import * as Domain from './../Domain.js';
 
-const collection = 'sidequests';
+export const collection = 'sidequests';
 
 export async function LoadQuests(): Promise<Domain.SideQuest[]> {
   let sideQuests = await SideQuestsCSV.load();

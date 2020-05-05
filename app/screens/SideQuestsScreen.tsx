@@ -9,6 +9,8 @@ import SideQuest from './SideQuest';
 import * as Domain from './../Domain';
 import * as Common from './../Common';
 
+import * as GlobalContext from './../GlobalContext';
+
 type Props = {
   navigation: DrawerNavigationProp<any, any>;
 };
@@ -16,6 +18,7 @@ type Props = {
 const SideQuestsScreenTest = (props: Props) => {
   const [list, setList] = useState<Domain.SideQuest[]>([]);
   const [percentage, setPercentage] = useState<number>(0);
+  let statsContext = GlobalContext.useTheme();
 
   let onPress = (index: number) => {
     let newChecked = !list[index].checked;
@@ -25,7 +28,11 @@ const SideQuestsScreenTest = (props: Props) => {
     });
     setList(updatedList);
     setPercentage(Common.calculatePercentage(updatedList));
-    //SideQuestsRepo.updateOne(list[questIndex]);
+    SideQuestsRepo.updateOne(list[index]);
+
+    //Update Stats
+    var stats = Common.calculateStats(updatedList);
+    statsContext.setStats([stats]);
   };
 
   useEffect(() => {
