@@ -3,7 +3,7 @@ import * as WeaponsCSV from './WeaponsCSV';
 
 import * as LocalStorage from './LocalStorage';
 
-const collection = 'weapons';
+export const collection = 'weapons';
 
 export async function load(): Promise<Domain.Weapon[]> {
   let indexToStorageWeapon = await LocalStorage.load(collection);

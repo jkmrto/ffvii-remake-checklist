@@ -19,3 +19,7 @@ export type Stats = {
   total: number;
   checked: number;
 };
+
+export interface CollectionToStats {
+  [Key: string]: Stats;
+}

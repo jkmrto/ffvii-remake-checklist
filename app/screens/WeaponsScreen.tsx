@@ -16,6 +16,8 @@ type Props = {
   navigation: DrawerNavigationProp<any, any>;
 };
 
+import * as GlobalContext from './../GlobalContext';
+
 type WebScreen = {
   uri: string;
   opened: boolean;
@@ -28,6 +30,8 @@ const SideQuestsScreenTest = (props: Props) => {
     uri: '',
     opened: false,
   });
+
+  let statsContext = GlobalContext.useTheme();
 
   useEffect(() => {
     async function mountQuestList() {
@@ -47,6 +51,10 @@ const SideQuestsScreenTest = (props: Props) => {
     setWeapons(updatedList);
     setPercentage(Common.calculatePercentage(updatedList));
     Repo.updateOne(weapons[index]);
+
+    //Update Stats
+    var stats = Common.calculateStats(updatedList);
+    statsContext.updateStats(Repo.collection, stats);
   };
 
   let onPressFandom = (uri: string) => {

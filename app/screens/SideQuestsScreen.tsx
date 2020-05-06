@@ -4,7 +4,7 @@ import update from 'immutability-helper';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 
 import Bar from './../components/Bar';
-import * as SideQuestsRepo from './../repositories/SideQuests';
+import * as Repo from './../repositories/SideQuests';
 import SideQuest from './SideQuest';
 import * as Domain from './../Domain';
 import * as Common from './../Common';
@@ -28,16 +28,16 @@ const SideQuestsScreenTest = (props: Props) => {
     });
     setList(updatedList);
     setPercentage(Common.calculatePercentage(updatedList));
-    SideQuestsRepo.updateOne(list[index]);
+    Repo.updateOne(list[index]);
 
     //Update Stats
     var stats = Common.calculateStats(updatedList);
-    statsContext.setStats([stats]);
+    statsContext.updateStats(Repo.collection, stats);
   };
 
   useEffect(() => {
     async function mountQuestList() {
-      let quests = await SideQuestsRepo.LoadQuests();
+      let quests = await Repo.LoadQuests();
       setList(quests);
       setPercentage(Common.calculatePercentage(quests));
     }

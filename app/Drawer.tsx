@@ -22,7 +22,7 @@ const CustomDrawerContentComponent = (props: DrawerContentComponentProps) => {
     async function mountDrawer() {
       console.log('Mounting');
       let stats = await StatsRepo.load();
-      theme.setStats(stats);
+      theme.initStats(stats);
     }
     mountDrawer();
   }, []);
