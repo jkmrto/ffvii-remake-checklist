@@ -2,19 +2,21 @@ import * as Domain from './../Domain';
 import * as types from './../types';
 import * as csv from './csv';
 
-export async function load(): Promise<Domain.SideQuest[]> {
-  let sideQuestsRaw = await csv.load('sideQuests_tab.csv');
-  let sideQuests: Domain.SideQuest[] = [];
-  sideQuestsRaw.forEach(dic => {
-    let sideQuest = newSideQuestFromDic(dic);
-    if (sideQuest != null) {
-      sideQuests.push(sideQuest);
+export async function load(): Promise<Domain.DiscoveryQuest[]> {
+  let discoveryQuestsRaw = await csv.load('discoveryQuests_tab.csv');
+  let discoveryQuests: Domain.DiscoveryQuest[] = [];
+  discoveryQuestsRaw.forEach(dic => {
+    let discoveryQuest = newDiscoveryQuestFromDic(dic);
+    if (discoveryQuest != null) {
+      discoveryQuests.push(discoveryQuest);
     }
   });
-  return sideQuests;
+  return discoveryQuests;
 }
 
-function newSideQuestFromDic(dic: types.Dic): Domain.SideQuest | null {
+function newDiscoveryQuestFromDic(
+  dic: types.Dic,
+): Domain.DiscoveryQuest | null {
   // Strings
   if (!csv.checkFieldContainsString('TITLE', dic)) return null;
   if (!csv.checkFieldContainsString('LINK', dic)) return null;

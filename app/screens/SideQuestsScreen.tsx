@@ -12,7 +12,7 @@ import * as Domain from './../Domain';
 import * as Common from './../Common';
 
 import SideQuest from './SideQuest';
-import * as GlobalContext from './../GlobalContext';
+import * as StatsContext from './../StatsContext';
 
 type Props = {
   navigation: DrawerNavigationProp<any, any>;
@@ -23,7 +23,7 @@ type WebScreen = {
   opened: boolean;
 };
 
-const SideQuestsScreenTest = (props: Props) => {
+const SideQuestsScreen = (props: Props) => {
   const [quests, setQuests] = useState<Domain.SideQuest[]>([]);
   const [percentage, setPercentage] = useState<number>(0);
   const [webScreen, setWebScreen] = useState<WebScreen>({
@@ -31,11 +31,11 @@ const SideQuestsScreenTest = (props: Props) => {
     opened: false,
   });
 
-  let statsContext = GlobalContext.useTheme();
+  let statsContext = StatsContext.use();
 
   useEffect(() => {
     async function mountQuestList() {
-      let quests = await Repo.LoadQuests();
+      let quests = await Repo.load();
       setQuests(quests);
       setPercentage(Common.calculatePercentage(quests));
     }
@@ -99,4 +99,4 @@ const SideQuestsScreenTest = (props: Props) => {
   }
 };
 
-export default SideQuestsScreenTest;
+export default SideQuestsScreen;

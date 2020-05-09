@@ -1,26 +1,28 @@
 import React, {useEffect} from 'react';
-import {SafeAreaView, ScrollView, View, Text} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, View, Text} from 'react-native';
 import {
   createDrawerNavigator,
   DrawerItems,
   DrawerContentComponentProps,
 } from 'react-navigation-drawer';
 
+import * as Colors from './Colors';
 import CircularProgress from './components/CircularProgress';
 
 // Screens
 import SideQuestsScreen from './screens/SideQuestsScreen';
+import DiscoveryQuestsScreen from './screens/DiscoveryQuestsScreen';
 import WeaponsScreen from './screens/WeaponsScreen';
 
-import * as GlobalContext from './GlobalContext';
+import * as StatsContext from './StatsContext';
 import * as StatsRepo from './repositories/Stats';
 
 const CustomDrawerContentComponent = (props: DrawerContentComponentProps) => {
-  const theme = GlobalContext.useTheme();
+  const theme = StatsContext.use();
 
   useEffect(() => {
     async function mountDrawer() {
-      console.log('Mounting');
+      console.log('Mounting Drawer');
       let stats = await StatsRepo.load();
       theme.initStats(stats);
     }
@@ -30,12 +32,19 @@ const CustomDrawerContentComponent = (props: DrawerContentComponentProps) => {
   return (
     <ScrollView>
       <SafeAreaView style={{flex: 1}}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.titleText}>Final Fantasy VII Remake</Text>
+          <Text style={styles.titleText}>Checklist</Text>
+        </View>
+
         <DrawerItems {...props} />
-        <CircularProgress percentage={theme.percentage * 100}>
-          <View>
-            <Text>{(theme.percentage * 100).toFixed(0)}%</Text>
-          </View>
-        </CircularProgress>
+        <View style={styles.circularProgressContainer}>
+          <CircularProgress percentage={theme.percentage * 100}>
+            <View>
+              <Text>{(theme.percentage * 100).toFixed(0)}%</Text>
+            </View>
+          </CircularProgress>
+        </View>
       </SafeAreaView>
     </ScrollView>
   );
@@ -45,6 +54,9 @@ const Drawer = createDrawerNavigator(
   {
     'Side Quests': {
       screen: SideQuestsScreen,
+    },
+    'Discovery Quests': {
+      screen: DiscoveryQuestsScreen,
     },
     Weapons: {
       screen: WeaponsScreen,
@@ -59,5 +71,28 @@ const Drawer = createDrawerNavigator(
     },
   },
 );
+
+const styles = StyleSheet.create({
+  circularProgressContainer: {
+    flex: 1,
+    marginTop: 15,
+    marginRight: 20,
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  titleContainer: {
+    backgroundColor: Colors.blue.dark,
+    flex: 1,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 10,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
+  titleText: {
+    fontSize: 20,
+    color: '#eee',
+  },
+});
 
 export default Drawer;

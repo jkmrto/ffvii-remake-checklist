@@ -15,12 +15,12 @@ type State = {
   statsMap: Domain.CollectionToStats;
 };
 
-export const GlobalContext = React.createContext({} as ContextType);
+export const StatsContext = React.createContext({} as ContextType);
 
-export class GlobalContextProvider extends React.Component<Props, State> {
+export class Provider extends React.Component<Props, State> {
   initMapStats: Domain.CollectionToStats = {};
   state = {
-    percentage: 55,
+    percentage: 0,
     statsMap: this.initMapStats,
   };
 
@@ -44,14 +44,14 @@ export class GlobalContextProvider extends React.Component<Props, State> {
 
   render() {
     return (
-      <GlobalContext.Provider
+      <StatsContext.Provider
         value={{
           percentage: this.state.percentage,
           updateStats: this.updateStats.bind(this),
           initStats: this.initStats.bind(this),
         }}>
         {this.props.children}
-      </GlobalContext.Provider>
+      </StatsContext.Provider>
     );
   }
 }
@@ -70,8 +70,7 @@ function sumStats(statsMap: Domain.CollectionToStats): Domain.Stats {
     };
   }
 
-  console.log(acc);
   return acc;
 }
 
-export const useTheme = () => React.useContext(GlobalContext);
+export const use = () => React.useContext(StatsContext);

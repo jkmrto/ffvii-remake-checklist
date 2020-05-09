@@ -1,14 +1,14 @@
 import React from 'react';
 import {createAppContainer} from 'react-navigation';
-import * as GlobalContext from './GlobalContext';
+import * as StatsContext from './StatsContext';
 import Drawer from './Drawer';
 
 const AppContainer = createAppContainer(Drawer);
 const App = () => {
   return (
-    <GlobalContext.GlobalContextProvider>
+    <StatsContext.Provider>
       <AppContainer />
-    </GlobalContext.GlobalContextProvider>
+    </StatsContext.Provider>
   );
 };
 

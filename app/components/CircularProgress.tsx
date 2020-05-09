@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import Svg, {Path, Circle} from 'react-native-svg';
+import * as Colors from './../Colors';
 
 const styles = StyleSheet.create({
   textView: {
@@ -46,11 +47,11 @@ interface Props {
 
 const CircularProgress = ({
   percentage,
-  blankColor = '#eaeaea',
-  donutColor = '#43cdcf',
+  blankColor = Colors.blue.light,
+  donutColor = Colors.blue.dark,
   fillColor = 'white',
-  progressWidth = 35,
-  size = 100,
+  progressWidth = 50,
+  size = 135,
   children,
 }: Props) => {
   let half = size / 2;

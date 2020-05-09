@@ -6,6 +6,22 @@ export type SideQuest = {
   link: string;
 };
 
+export type DiscoveryQuest = {
+  index: number;
+  title: string;
+  checked: boolean;
+  chapter: number;
+  link: string;
+};
+
+export interface Quest {
+  index: number;
+  title: string;
+  checked: boolean;
+  chapter: number;
+  link: string;
+}
+
 export type Weapon = {
   index: number;
   name: string;

@@ -1,17 +1,19 @@
 import React, {useState, useEffect} from 'react';
-import {ScrollView, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import update from 'immutability-helper';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 
 import Bar from './../components/Bar';
 import BackBar from './../components/BackBar';
 import WebComponent from './../components/WebComponent';
-import Weapon from './Weapon';
 
-import * as Repo from './../repositories/Weapons';
+import * as Repo from './../repositories/DiscoveryQuests';
 import * as Domain from './../Domain';
 import * as Common from './../Common';
+
+import SideQuest from './SideQuest';
 import * as StatsContext from './../StatsContext';
+import * as Colors from './../Colors';
 
 type Props = {
   navigation: DrawerNavigationProp<any, any>;
@@ -22,8 +24,8 @@ type WebScreen = {
   opened: boolean;
 };
 
-const WeaponsScreen = (props: Props) => {
-  const [weapons, setWeapons] = useState<Domain.Weapon[]>([]);
+const DiscoveryQuestsScreen = (props: Props) => {
+  const [quests, setQuests] = useState<Domain.DiscoveryQuest[]>([]);
   const [percentage, setPercentage] = useState<number>(0);
   const [webScreen, setWebScreen] = useState<WebScreen>({
     uri: '',
@@ -33,23 +35,23 @@ const WeaponsScreen = (props: Props) => {
   let statsContext = StatsContext.use();
 
   useEffect(() => {
-    async function mountWeapons() {
-      let weapons = await Repo.load();
-      setWeapons(weapons);
-      setPercentage(Common.calculatePercentage(weapons));
+    async function mountQuestList() {
+      let quests = await Repo.load();
+      setQuests(quests);
+      setPercentage(Common.calculatePercentage(quests));
     }
-    mountWeapons();
+    mountQuestList();
   }, []);
 
   let onPressCheck = (index: number) => {
-    let newChecked = !weapons[index].checked;
+    let newChecked = !quests[index].checked;
 
-    let updatedList = update(weapons, {
+    let updatedList = update(quests, {
       [index]: {checked: {$set: newChecked}},
     });
-    setWeapons(updatedList);
+    setQuests(updatedList);
     setPercentage(Common.calculatePercentage(updatedList));
-    Repo.updateOne(weapons[index]);
+    Repo.updateOne(quests[index]);
 
     //Update Stats
     var stats = Common.calculateStats(updatedList);
@@ -66,27 +68,27 @@ const WeaponsScreen = (props: Props) => {
 
   if (webScreen.opened) {
     return (
-      <View style={{flex: 1}}>
+      <View style={styles.container}>
         <BackBar onPressBackArrow={onPressBackFromBrowser} />
         <WebComponent uri={webScreen.uri} />
       </View>
     );
   } else {
     return (
-      <View style={{flex: 1}}>
+      <View style={styles.container}>
         <View>
           <Bar
-            title={'Weapons'}
+            title="Discovery Quests"
             navigation={props.navigation}
             percentage={percentage}
           />
         </View>
         <ScrollView>
-          {weapons.map(weapon => {
+          {quests.map(quest => {
             return (
-              <Weapon
-                key={weapon.index}
-                weapon={weapon}
+              <SideQuest
+                key={quest.index}
+                quest={quest}
                 onPressCheck={onPressCheck}
                 onPressFandom={onPressFandom}
               />
@@ -98,4 +100,11 @@ const WeaponsScreen = (props: Props) => {
   }
 };
 
-export default WeaponsScreen;
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: Colors.blue.light,
+    flex: 1,
+  },
+});
+
+export default DiscoveryQuestsScreen;

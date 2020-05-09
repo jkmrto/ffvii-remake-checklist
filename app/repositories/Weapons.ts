@@ -1,7 +1,6 @@
+import * as LocalStorage from './LocalStorage';
 import * as Domain from './../Domain';
 import * as WeaponsCSV from './WeaponsCSV';
-
-import * as LocalStorage from './LocalStorage';
 
 export const collection = 'weapons';
 
