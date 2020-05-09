@@ -3,6 +3,7 @@ export type SideQuest = {
   title: string;
   checked: boolean;
   chapter: number;
+  link: string;
 };
 
 export type Weapon = {

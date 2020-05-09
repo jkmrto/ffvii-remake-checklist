@@ -3,7 +3,7 @@ import * as types from './../types';
 import * as csv from './csv';
 
 export async function load(): Promise<Domain.Weapon[]> {
-  let weaponsRaw = await csv.load('weapons.csv');
+  let weaponsRaw = await csv.load('weapons_tab.csv');
   let weapons: Domain.Weapon[] = [];
   weaponsRaw.forEach(dic => {
     let weapon = newWeaponFromDic(dic);

@@ -4,62 +4,99 @@ import update from 'immutability-helper';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 
 import Bar from './../components/Bar';
+import BackBar from './../components/BackBar';
+import WebComponent from './../components/WebComponent';
+
 import * as Repo from './../repositories/SideQuests';
-import SideQuest from './SideQuest';
 import * as Domain from './../Domain';
 import * as Common from './../Common';
 
+import SideQuest from './SideQuest';
 import * as GlobalContext from './../GlobalContext';
 
 type Props = {
   navigation: DrawerNavigationProp<any, any>;
 };
 
+type WebScreen = {
+  uri: string;
+  opened: boolean;
+};
+
 const SideQuestsScreenTest = (props: Props) => {
-  const [list, setList] = useState<Domain.SideQuest[]>([]);
+  const [quests, setQuests] = useState<Domain.SideQuest[]>([]);
   const [percentage, setPercentage] = useState<number>(0);
+  const [webScreen, setWebScreen] = useState<WebScreen>({
+    uri: '',
+    opened: false,
+  });
+
   let statsContext = GlobalContext.useTheme();
 
-  let onPress = (index: number) => {
-    let newChecked = !list[index].checked;
+  useEffect(() => {
+    async function mountQuestList() {
+      let quests = await Repo.LoadQuests();
+      setQuests(quests);
+      setPercentage(Common.calculatePercentage(quests));
+    }
+    mountQuestList();
+  }, []);
 
-    let updatedList = update(list, {
+  let onPressCheck = (index: number) => {
+    let newChecked = !quests[index].checked;
+
+    let updatedList = update(quests, {
       [index]: {checked: {$set: newChecked}},
     });
-    setList(updatedList);
+    setQuests(updatedList);
     setPercentage(Common.calculatePercentage(updatedList));
-    Repo.updateOne(list[index]);
+    Repo.updateOne(quests[index]);
 
     //Update Stats
     var stats = Common.calculateStats(updatedList);
     statsContext.updateStats(Repo.collection, stats);
   };
 
-  useEffect(() => {
-    async function mountQuestList() {
-      let quests = await Repo.LoadQuests();
-      setList(quests);
-      setPercentage(Common.calculatePercentage(quests));
-    }
-    mountQuestList();
-  }, []);
+  let onPressFandom = (uri: string) => {
+    setWebScreen({uri: uri, opened: true});
+  };
 
-  return (
-    <View>
-      <Bar
-        title="Side Quests"
-        navigation={props.navigation}
-        percentage={percentage}
-      />
-      <ScrollView>
-        {list.map(quest => {
-          return (
-            <SideQuest key={quest.index} quest={quest} onPress={onPress} />
-          );
-        })}
-      </ScrollView>
-    </View>
-  );
+  let onPressBackFromBrowser = () => {
+    setWebScreen({uri: '', opened: false});
+  };
+
+  if (webScreen.opened) {
+    return (
+      <View style={{flex: 1}}>
+        <BackBar onPressBackArrow={onPressBackFromBrowser} />
+        <WebComponent uri={webScreen.uri} />
+      </View>
+    );
+  } else {
+    return (
+      <View style={{flex: 1}}>
+        <View>
+          <Bar
+            title="Side Quests"
+            navigation={props.navigation}
+            percentage={percentage}
+          />
+        </View>
+        <ScrollView>
+          {quests.map(quest => {
+            return (
+              <SideQuest
+                key={quest.index}
+                quest={quest}
+                onPressCheck={onPressCheck}
+                onPressFandom={onPressFandom}
+              />
+            );
+          })}
+        </ScrollView>
+      </View>
+    );
+  }
 };
 
 export default SideQuestsScreenTest;

@@ -2,28 +2,28 @@ import React, {useState, useEffect} from 'react';
 import {ScrollView, View} from 'react-native';
 import update from 'immutability-helper';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
-import {WebView} from 'react-native-webview';
 
 import Bar from './../components/Bar';
 import BackBar from './../components/BackBar';
-import Weapon from './Weapon';
+import WebComponent from './../components/WebComponent';
 
 import * as Repo from './../repositories/Weapons';
 import * as Domain from './../Domain';
 import * as Common from './../Common';
 
+import Weapon from './Weapon';
+import * as GlobalContext from './../GlobalContext';
+
 type Props = {
   navigation: DrawerNavigationProp<any, any>;
 };
-
-import * as GlobalContext from './../GlobalContext';
 
 type WebScreen = {
   uri: string;
   opened: boolean;
 };
 
-const SideQuestsScreenTest = (props: Props) => {
+const WeaponsScreen = (props: Props) => {
   const [weapons, setWeapons] = useState<Domain.Weapon[]>([]);
   const [percentage, setPercentage] = useState<number>(0);
   const [webScreen, setWebScreen] = useState<WebScreen>({
@@ -34,12 +34,12 @@ const SideQuestsScreenTest = (props: Props) => {
   let statsContext = GlobalContext.useTheme();
 
   useEffect(() => {
-    async function mountQuestList() {
-      let quests = await Repo.load();
-      setWeapons(quests);
-      setPercentage(Common.calculatePercentage(quests));
+    async function mountWeapons() {
+      let weapons = await Repo.load();
+      setWeapons(weapons);
+      setPercentage(Common.calculatePercentage(weapons));
     }
-    mountQuestList();
+    mountWeapons();
   }, []);
 
   let onPressCheck = (index: number) => {
@@ -99,28 +99,4 @@ const SideQuestsScreenTest = (props: Props) => {
   }
 };
 
-const WebComponent = ({uri}: {uri: string}) => {
-  return <WebView source={{uri}} />;
-};
-
-//<View>
-//      <Bar
-//        title="Side Quests"
-//        navigation={props.navigation}
-//        percentage={percentage}
-//      />
-//      <ScrollView>
-//        {weapons.map(weapon => {
-//          return (
-//            <Weapon
-//              key={weapon.index}
-//              weapon={weapon}
-//              onPressCheck={onPressCheck}
-//              onPressFandom={onPressFandom}
-//            />
-//          );
-//        })}
-//      </ScrollView>
-//    </View>
-
-export default SideQuestsScreenTest;
+export default WeaponsScreen;

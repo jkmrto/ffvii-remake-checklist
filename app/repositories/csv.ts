@@ -6,18 +6,30 @@ export async function load(pathToFile: string): Promise<types.Dic[]> {
 
   var fileContents = await fs.readFileAssets(pathToFile, 'utf8');
   var lines = fileContents.split('\n');
-  var keys = lines[0].split(',');
+  var keys = lines[0].split('\t');
 
-  lines.slice(1, lines.length).forEach(line => {
+  var contentRows = lines.slice(1, lines.length);
+  contentRows.forEach((row, rowIndex) => {
     let dic: types.Dic = {};
-    var lineSplit = line.split(',');
+    var lineSplit = row.split('\t');
     if (lineSplit.length == keys.length) {
       for (var i = 0; i < lineSplit.length; i++) {
         dic[keys[i]] = lineSplit[i];
       }
       listDics.push(dic);
     } else {
-      console.log('Error parsing this line: ', line);
+      // Escape error if it is last row
+      if (row === '' && rowIndex == contentRows.length - 1) {
+        return;
+      }
+      console.log(
+        'Error parsing this row: ',
+        row,
+        '\nExpected length: ',
+        keys.length,
+        ', Gotten Length: ',
+        lineSplit.length,
+      );
     }
   });
 
