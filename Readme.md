@@ -1,7 +1,15 @@
 # Final Fantasy VII Remake Checklist
 
 Just a pet project.
-A checklist with the quests and weapons of the ffvii remake
+A checklist with the quests and weapons of the ffvii remake.
+
+![Android APK](https://github.com/jkmrto/ffvii-remake-checklist/suites/669015290/artifacts/5995652)
+
+This project uses:
+- React native
+- Typescript
+- Stateless component
+- Contexts to share state
 
 ## Developer setup.
 
