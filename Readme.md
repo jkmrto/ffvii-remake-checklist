@@ -1,5 +1,8 @@
 # Final Fantasy VII Remake Checklist
 
+Just a pet project.
+A checklist with the quests and weapons of the ffvii remake
+
 ## Developer setup.
 
 1. Install dependencies:
